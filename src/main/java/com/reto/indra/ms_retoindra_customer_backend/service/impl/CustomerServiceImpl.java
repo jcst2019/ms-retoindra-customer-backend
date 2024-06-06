@@ -16,13 +16,13 @@ public class CustomerServiceImpl implements CustomerService {
     CustomerRepository customerRepository;
 
     @Override
-    public Flux<Customer> listClients() {
+    public Flux<Customer> listCustomers() {
                 return customerRepository.findAll();
 //                        .delayElements(Duration.ofMillis(500)); //TODO Solo para las pruebas iniciales
     }
 
     @Override
-    public Mono<Customer> listClientById(String id) {
+    public Mono<Customer> listCustomerById(String id) {
         return customerRepository.findById(id);
     }
 
@@ -33,23 +33,23 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Mono<Customer> createClient(Customer customer) {
+    public Mono<Customer> createCustomer(Customer customer) {
         customer.setCreateAt(new Date());
         return customerRepository.save(customer);
 
     }
 
     @Override
-    public Mono<Customer> deleteClient(String id) {
-        return listClientById(id) //Mono<Producto>
+    public Mono<Customer> deleteCustomer(String id) {
+        return listCustomerById(id) //Mono<Producto>
                 .flatMap(c->customerRepository.deleteById(id)
                             .then(Mono.just(c))
                 );
     }
 
     @Override
-    public Mono<Customer> updateClient(Customer customer) {
-        return listClientById(customer.getId())
+    public Mono<Customer> updateCustomer(Customer customer) {
+        return listCustomerById(customer.getId())
                 .flatMap(c->{return customerRepository.save(c);});
     }
 }

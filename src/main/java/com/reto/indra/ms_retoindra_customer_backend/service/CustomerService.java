@@ -6,11 +6,11 @@ import reactor.core.publisher.Mono;
 
 public interface CustomerService {
 
-    Flux<Customer> listClients();
-    Mono<Customer> listClientById(String id);
+    Flux<Customer> listCustomers();
+    Mono<Customer> listCustomerById(String id);
     Mono<Customer> listClientByUniqueCode(String uniqueCode);
-    Mono<Customer> createClient(Customer customer);
-    Mono<Customer> deleteClient(String id);
-    Mono<Customer> updateClient(Customer customer);
+    Mono<Customer> createCustomer(Customer customer);
+    Mono<Customer> deleteCustomer(String id);
+    Mono<Customer> updateCustomer(Customer customer);
 
 }
