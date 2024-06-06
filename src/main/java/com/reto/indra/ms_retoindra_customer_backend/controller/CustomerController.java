@@ -12,6 +12,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import javax.crypto.SecretKey;
+import java.util.Map;
 
 @CrossOrigin("*")
 @RestController
@@ -28,6 +29,12 @@ public class CustomerController {
     @GetMapping(value="/{id}")
     public ResponseEntity<Mono<Customer>> listCustomers(@PathVariable("id") String id){
         return new ResponseEntity<>(customerService.listClientById(id),HttpStatus.OK);
+    }
+    @GetMapping(value="/findByUniqueCode")
+    public ResponseEntity<Mono<Customer>> findByUniqueCode(@RequestBody Map<String, String>  requestBody){
+        String uniqueCode = requestBody.get("uniqueCode");
+        System.out.println(uniqueCode);
+        return new ResponseEntity<>(customerService.listClientByUniqueCode(uniqueCode),HttpStatus.OK);
     }
 
     @PostMapping(value="/create",consumes= MediaType.APPLICATION_JSON_VALUE)

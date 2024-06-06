@@ -27,6 +27,12 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    public Mono<Customer> listClientByUniqueCode(String uniqueCode) {
+        System.out.println("-->"+uniqueCode);
+        return customerRepository.findByUniqueCode(uniqueCode);
+    }
+
+    @Override
     public Mono<Customer> createClient(Customer customer) {
         customer.setCreateAt(new Date());
         return customerRepository.save(customer);
