@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -25,19 +22,19 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Mono<Customer> listClientById(Long id) {
+    public Mono<Customer> listClientById(String id) {
         return customerRepository.findById(id);
     }
 
     @Override
-    public Mono<Void> createClient(Customer customer) {
-        return listClientById(customer.getId())
-                .switchIfEmpty(Mono.just(customer).flatMap(c->customerRepository.save(c)))
-                .then();
+    public Mono<Customer> createClient(Customer customer) {
+        customer.setCreateAt(new Date());
+        return customerRepository.save(customer);
+
     }
 
     @Override
-    public Mono<Customer> deleteClient(Long id) {
+    public Mono<Customer> deleteClient(String id) {
         return listClientById(id) //Mono<Producto>
                 .flatMap(c->customerRepository.deleteById(id)
                             .then(Mono.just(c))

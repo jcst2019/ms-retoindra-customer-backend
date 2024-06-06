@@ -15,38 +15,25 @@ import javax.crypto.SecretKey;
 
 @CrossOrigin("*")
 @RestController
+@RequestMapping("/api/customers")
 public class CustomerController {
 
     @Autowired
     CustomerService customerService;
 
-    @GetMapping(value="customers")
+    @GetMapping(value="/")
     public ResponseEntity<Flux<Customer>> customers(){
         return new ResponseEntity<>(customerService.listClients(), HttpStatus.OK);
     }
-    @GetMapping(value="customers/{id}")
-    public ResponseEntity<Mono<Customer>> listCustomers(@PathVariable("id") Long id){
+    @GetMapping(value="/{id}")
+    public ResponseEntity<Mono<Customer>> listCustomers(@PathVariable("id") String id){
         return new ResponseEntity<>(customerService.listClientById(id),HttpStatus.OK);
     }
 
-    @PostMapping(value="create",consumes= MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Mono<Void>> createCustomer(@RequestBody Customer customer) throws Exception {
+    @PostMapping(value="/create",consumes= MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Mono<Customer>> createCustomer(@RequestBody Customer customer) throws Exception {
         SecretKey key = EncryptionAESUtil.generateAESKey();
         customer.setUniqueCode(EncryptionAESUtil.encryptAES(customer.getUniqueCode(), key));
-        //customer.setId(null); // Asegúrate de que el ID sea null para permitir la auto-generación
-        customer.setNewRow(true);
         return new ResponseEntity<>(customerService.createClient(customer),HttpStatus.OK);
     }
-//    @DeleteMapping(value="eliminar")
-//    public Mono<ResponseEntity<Producto>> eliminarProducto(@RequestParam("cod") int cod) {
-//        return productosService.eliminarProducto(cod)//Mono<Producto>
-//                .map(p->new ResponseEntity<>(p,HttpStatus.OK))//Mono<ResponseEntity<Producto>>
-//                .switchIfEmpty(Mono.just(new ResponseEntity<>(HttpStatus.NOT_FOUND)));//Mono<ResponseEntity<Producto>>
-//    }
-//    @PutMapping(value="actualizar")
-//    public Mono<ResponseEntity<Producto>> actualizarProducto(@RequestParam("cod") int cod,@RequestParam("precio") double precio) {
-//        return productosService.actualizarPrecio(cod, precio)//Mono<Producto>
-//                .map(p->new ResponseEntity<>(p,HttpStatus.OK))//Mono<ResponseEntity<Producto>>
-//                .switchIfEmpty(Mono.just(new ResponseEntity<>(HttpStatus.NOT_FOUND)));//Mono<ResponseEntity<Producto>>
-//    }
 }
