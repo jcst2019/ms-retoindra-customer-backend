@@ -14,7 +14,7 @@
 	<name>ms-retoindra-customer-backend</name>
 	<description>Customer Microservice</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -56,6 +56,16 @@
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
 			<version>1.4.12</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-webflux-ui</artifactId>
+			<version>1.6.15</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-webflux-core</artifactId>
+			<version>1.6.15</version>
 		</dependency>
 	</dependencies>
 

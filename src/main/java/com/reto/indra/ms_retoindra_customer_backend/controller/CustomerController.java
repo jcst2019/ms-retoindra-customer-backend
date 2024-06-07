@@ -26,6 +26,11 @@ public class CustomerController {
     @Autowired
     CustomerService customerService;
 
+    @GetMapping("/swagger-ui")
+    public String redirectToSwagger() {
+        return "redirect:/swagger-ui/index.html";
+    }
+
     @GetMapping(value="/")
     public ResponseEntity<Flux<Customer>> customers(){
         return new ResponseEntity<>(customerService.listCustomers(), HttpStatus.OK);
