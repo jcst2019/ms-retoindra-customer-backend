@@ -44,11 +44,10 @@ public class CustomerController {
     public ResponseEntity<Mono<Customer>> findByUniqueCode(@RequestParam("uniqueCode") String encodedUniqueCode) {
         try {
             encodedUniqueCode = encodedUniqueCode.replace(" ", "+");
-//            System.out.println("encodedUniqueCode==>" + encodedUniqueCode);
             logger.info("encodedUniqueCode: {}", encodedUniqueCode);
             return new ResponseEntity<>(customerService.listClientByUniqueCode(encodedUniqueCode), HttpStatus.OK);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Error findByUniqueCode", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -62,7 +61,7 @@ public ResponseEntity<Mono<Customer>> createCustomer(@RequestBody Customer custo
         customer.setUniqueCode(encryptedUniqueCode);
         return new ResponseEntity<>(customerService.createCustomer(customer), HttpStatus.OK);
     } catch (Exception e) {
-        e.printStackTrace();
+        logger.error("Error createCustomer", e);
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
