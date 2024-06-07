@@ -1,6 +1,7 @@
 package com.reto.indra.ms_retoindra_customer_backend.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,7 +16,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-
+@Builder
 @Document(collection="customers")
 public class Customer {
     @Id
@@ -29,6 +30,7 @@ public class Customer {
     private String phoneNumber;
     private String email;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date createAt;
+    @Builder.Default
+    private Date createAt=new Date();
 
 }
