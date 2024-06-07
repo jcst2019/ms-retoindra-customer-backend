@@ -18,11 +18,15 @@ import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/customers")
 public class CustomerController {
+
+    private static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
 
     @Autowired
     CustomerService customerService;
@@ -40,8 +44,8 @@ public class CustomerController {
     public ResponseEntity<Mono<Customer>> findByUniqueCode(@RequestParam("uniqueCode") String encodedUniqueCode) {
         try {
             encodedUniqueCode = encodedUniqueCode.replace(" ", "+");
-            System.out.println("encodedUniqueCode==>" + encodedUniqueCode);
-
+//            System.out.println("encodedUniqueCode==>" + encodedUniqueCode);
+            logger.info("encodedUniqueCode: {}", encodedUniqueCode);
             return new ResponseEntity<>(customerService.listClientByUniqueCode(encodedUniqueCode), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
@@ -52,6 +56,7 @@ public class CustomerController {
 @PostMapping(value="/create")
 public ResponseEntity<Mono<Customer>> createCustomer(@RequestBody Customer customer) {
     try {
+        logger.info("customer =>: {}", customer);
         SecretKey key = EncryptionAESUtil.generateAESKey();
         String encryptedUniqueCode = EncryptionAESUtil.encryptAES(customer.getUniqueCode(), key);
         customer.setUniqueCode(encryptedUniqueCode);
