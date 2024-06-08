@@ -25,3 +25,11 @@ A continuación, se muestran algunos ejemplos de puntos finales:
 - GET /api/customers/findByUniqueCode?uniqueCode={uniqueCode}: Encuentra un cliente por su código único.
 - POST /api/customers/create: Crea un nuevo cliente.
 
+### Desarrollado por:
+
+**Juan Carlos Solar Torres**
+
+📱 **Celular:** +51 951800369
+
+📧 **Correo:** juansolar4@gmail.com
+
